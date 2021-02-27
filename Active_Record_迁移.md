@@ -2,17 +2,26 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [Active_Record_迁移](#active_record_%E8%BF%81%E7%A7%BB)
-- [模型生成器](#%E6%A8%A1%E5%9E%8B%E7%94%9F%E6%88%90%E5%99%A8)
-- [传递修饰符](#%E4%BC%A0%E9%80%92%E4%BF%AE%E9%A5%B0%E7%AC%A6)
-- [创建数据表](#%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E8%A1%A8)
-- [创建联结数据表](#%E5%88%9B%E5%BB%BA%E8%81%94%E7%BB%93%E6%95%B0%E6%8D%AE%E8%A1%A8)
-- [修改字段](#%E4%BF%AE%E6%94%B9%E5%AD%97%E6%AE%B5)
-- [字段修饰符](#%E5%AD%97%E6%AE%B5%E4%BF%AE%E9%A5%B0%E7%AC%A6)
-- [如果辅助方法不够用](#%E5%A6%82%E6%9E%9C%E8%BE%85%E5%8A%A9%E6%96%B9%E6%B3%95%E4%B8%8D%E5%A4%9F%E7%94%A8)
-- [使用change方法](#%E4%BD%BF%E7%94%A8change%E6%96%B9%E6%B3%95)
-- [使用reversible方法](#%E4%BD%BF%E7%94%A8reversible%E6%96%B9%E6%B3%95)
-- [使用up和down方法](#%E4%BD%BF%E7%94%A8up%E5%92%8Cdown%E6%96%B9%E6%B3%95)
+  - [Active_Record_迁移](#active_record_%E8%BF%81%E7%A7%BB)
+  - [模型生成器](#%E6%A8%A1%E5%9E%8B%E7%94%9F%E6%88%90%E5%99%A8)
+  - [传递修饰符](#%E4%BC%A0%E9%80%92%E4%BF%AE%E9%A5%B0%E7%AC%A6)
+  - [创建数据表](#%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E8%A1%A8)
+  - [创建联结数据表](#%E5%88%9B%E5%BB%BA%E8%81%94%E7%BB%93%E6%95%B0%E6%8D%AE%E8%A1%A8)
+  - [修改字段](#%E4%BF%AE%E6%94%B9%E5%AD%97%E6%AE%B5)
+  - [字段修饰符](#%E5%AD%97%E6%AE%B5%E4%BF%AE%E9%A5%B0%E7%AC%A6)
+  - [如果辅助方法不够用](#%E5%A6%82%E6%9E%9C%E8%BE%85%E5%8A%A9%E6%96%B9%E6%B3%95%E4%B8%8D%E5%A4%9F%E7%94%A8)
+  - [使用change方法](#%E4%BD%BF%E7%94%A8change%E6%96%B9%E6%B3%95)
+  - [使用reversible方法](#%E4%BD%BF%E7%94%A8reversible%E6%96%B9%E6%B3%95)
+  - [使用up和down方法](#%E4%BD%BF%E7%94%A8up%E5%92%8Cdown%E6%96%B9%E6%B3%95)
+  - [撤销之前的迁移](#%E6%92%A4%E9%94%80%E4%B9%8B%E5%89%8D%E7%9A%84%E8%BF%81%E7%A7%BB)
+  - [运行迁移](#%E8%BF%90%E8%A1%8C%E8%BF%81%E7%A7%BB)
+  - [回滚](#%E5%9B%9E%E6%BB%9A)
+  - [安装数据库 & 重置数据库](#%E5%AE%89%E8%A3%85%E6%95%B0%E6%8D%AE%E5%BA%93--%E9%87%8D%E7%BD%AE%E6%95%B0%E6%8D%AE%E5%BA%93)
+  - [指定迁移 & 不同环境中运行迁移](#%E6%8C%87%E5%AE%9A%E8%BF%81%E7%A7%BB--%E4%B8%8D%E5%90%8C%E7%8E%AF%E5%A2%83%E4%B8%AD%E8%BF%90%E8%A1%8C%E8%BF%81%E7%A7%BB)
+  - [修改现有的迁移](#%E4%BF%AE%E6%94%B9%E7%8E%B0%E6%9C%89%E7%9A%84%E8%BF%81%E7%A7%BB)
+- [数据库模式转储](#%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A8%A1%E5%BC%8F%E8%BD%AC%E5%82%A8)
+  - [数据库模式转储的类型](#%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A8%A1%E5%BC%8F%E8%BD%AC%E5%82%A8%E7%9A%84%E7%B1%BB%E5%9E%8B)
+- [Active Record 和引用完整性](#active-record-%E5%92%8C%E5%BC%95%E7%94%A8%E5%AE%8C%E6%95%B4%E6%80%A7)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -151,3 +160,55 @@ class ExampleMigration < ActiveRecord::Migration[5.0]
   end
 end
 ```
+
+##  撤销之前的迁移
+
+## 运行迁移
+如果指定了目标版本，Active Record 会运行该版本之前的所有迁移（调用其中的 change、up 和 down 方法），其中版本指的是迁移文件名的数字前缀。
+
+## 回滚
+一般是回滚最后一个迁移
+
+要想取消多个迁移，可以使用 STEP 参数
+
+## 安装数据库 & 重置数据库
+
+rails db:setup 任务用于创建数据库，加载数据库模式，并使用种子数据初始化数据库。
+
+rails db:reset 任务用于删除并重新创建数据库，其功能相当于 rails db:drop db:setup。
+
+## 指定迁移 & 不同环境中运行迁移 
+
+要想运行或撤销指定迁移，可以使用 db:migrate:up 和 db:migrate:down 任务。只需指定版本，对应迁移就会调用它的 change 、up 或 down 方法
+
+bin/rails db:migrate 任务默认在开发环境中运行迁移。要想在其他环境中运行迁移，可以在执行任务时使用 RAILS_ENV 环境变量说明所需环境。
+
+## 修改现有的迁移
+
+如果已经运行过存在错误的迁移，那么直接修正迁移中的错误并重新运行这个迁移并不能解决问题：Rails 知道这个迁移已经运行过，因此执行 rails db:migrate 任务时不会执行任何操作。必须先回滚这个迁移（例如通过执行 bin/rails db:rollback 任务），再修正迁移中的错误，然后执行 rails db:migrate 任务来运行这个迁移的正确版本。
+
+<b>最好是编写一个新的迁移来执行我们想要的操作，这样是相对无害的！</b>
+
+# 数据库模式转储
+
+Active Record 通过检查数据库生成的 db/schema.rb 文件或 SQL 文件才是数据库模式的可信来源。这两个可信来源不应该被修改，它们仅用于表示数据库的当前状态。
+
+## 数据库模式转储的类型
+
+两种方式，可以通过 config/application.rb 文件的 config.active_record.schema_format 选项来设置想要采用的方式，即 :sql 或 :ruby
+
+ruby----db/schema.rb
+sql----db/structure.sql
+
+（postgrsql中，可使用ide自带的数据库软件导出！
+命令行资料--https://www.postgresql.org/docs/9.1/app-pgdump.html
+）
+
+db/schema.rb 文件包含数据库的当前版本号，这样可以确保在合并两个包含数据库模式文件的分支时会发生冲突。一旦出现这种情况，就需要手动解决冲突，保留版本较高的那个数据库模式文件。
+
+
+# Active Record 和引用完整性
+
+Active Record 在模型而不是数据库中声明关联。因此，像触发器、约束这些依赖数据库的特性没有被大量使用。
+
+验证，如 validates :foreign_key, uniqueness: true，是模型强制数据完整性的一种方式。在关联中设置 :dependent 选项，可以保证父对象删除后，子对象也会被删除。和其他应用层的操作一样，这些操作无法保证引用完整性，因此有些人会在数据库中使用外键约束以加强数据完整性。
