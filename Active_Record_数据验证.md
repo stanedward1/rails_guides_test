@@ -3,6 +3,7 @@
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [Active_Record_数据验证](#active_record_%E6%95%B0%E6%8D%AE%E9%AA%8C%E8%AF%81)
+  - [几个验证错误的方法](#%E5%87%A0%E4%B8%AA%E9%AA%8C%E8%AF%81%E9%94%99%E8%AF%AF%E7%9A%84%E6%96%B9%E6%B3%95)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -46,3 +47,22 @@ update_counters
 
 save(validate: false)
 ```
+
++ valid?&invalid?
+
+```ruby
+
+class Person < ApplicationRecord
+  validates :name, presence: true
+end
+ 
+Person.create(name: "John Doe").valid? # => true
+Person.create(name: nil).valid? # => false
+```
+invalid?正好相反
+
+## 几个验证错误的方法
++ errors[]
++ errors.details
+
+
