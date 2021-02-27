@@ -36,12 +36,12 @@
 
 * 外键：使用 singularized_table_name_id 形式命名，例如 item_id，order_id。创建模型关联后，Active Record 会查找这个字段；
 
-* lock_version：在模型中添加乐观锁；  
+* <strong>lock_version：在模型中添加乐观锁；  
 type：让模型使用单表继承；  
 (association_name)_type：存储多态关联的类型；
   
   (table_name)_count：缓存所关联对象的数量。比如说，一个 Article 有多个 Comment，那么comments_count 列存储各篇文章现有的评论数量；
-
+</strong>
 <strong>覆盖命名约定</strong>  
 
 <h2><strong> CRUD </strong></h2>
@@ -102,3 +102,4 @@ https://ruby-china.github.io/rails-guides/active_record_validations.html
 Active Record 回调用于在模型生命周期的特定事件上绑定代码，相应的事件发生时，执行绑定的代码。例如创建新纪录时、更新记录时、删除记录时，等等。Active Record 回调会详细介绍回调。
 
 ## 迁移
+https://ruby-china.github.io/rails-guides/active_record_migrations.html
