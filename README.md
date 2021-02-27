@@ -16,3 +16,6 @@
 
 ![迁移](img/迁移.png)
 [点击这里](Active_Record_迁移.md)
+
+![数据验证](img/数据验证.png)
+[点击这里](Active_Record_数据验证.md)
