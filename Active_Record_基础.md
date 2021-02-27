@@ -8,6 +8,9 @@
   - [读取](#%E8%AF%BB%E5%8F%96)
   - [更新](#%E6%9B%B4%E6%96%B0)
   - [删除](#%E5%88%A0%E9%99%A4)
+- [ 数据验证 ](#%E6%95%B0%E6%8D%AE%E9%AA%8C%E8%AF%81)
+- [ 回调 ](#%E5%9B%9E%E8%B0%83)
+- [ 迁移 ](#%E8%BF%81%E7%A7%BB)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -65,3 +68,37 @@ https://ruby-china.github.io/rails-guides/active_record_querying.html
 
 ### 删除
 destroy方法
+
+<h2><strong> 数据验证 </strong></h2>
+<b>把数据存入数据库之前进行验证是十分重要的步骤，所以调用 save 和 update 方法时会做数据验证。
+
+验证失败时返回 false，此时不会对数据库做任何操作。
+
+这两个方法都有对应的爆炸方法（save! 和 update!）。爆炸方法要严格一些，如果验证失败，抛出 ActiveRecord::RecordInvalid 异常。</b>
+
+```ruby
+2.7.2 :001 > user = User.new
+   (0.9ms)  SELECT sqlite_version(*)
+ => #<User id: nil, name: nil, email: nil, password_digest: nil, created_at: nil, ... 
+2.7.2 :002 > user.save
+  TRANSACTION (0.1ms)  begin transaction
+  User Exists? (0.9ms)  SELECT 1 AS one FROM "users" WHERE "users"."email" IS NULL LIMIT ?  [["LIMIT", 1]]
+  TRANSACTION (0.1ms)  rollback transaction
+ => false 
+2.7.2 :003 > user.save!
+  TRANSACTION (0.1ms)  begin transaction
+  User Exists? (0.1ms)  SELECT 1 AS one FROM "users" WHERE "users"."email" IS NULL LIMIT ?  [["LIMIT", 1]]
+  TRANSACTION (0.1ms)  rollback transaction
+Traceback (most recent call last):
+        1: from (irb):3
+ActiveRecord::RecordInvalid (Validation failed: Password can't be blank, Email can't be blank)
+
+```
+
+https://ruby-china.github.io/rails-guides/active_record_validations.html
+
+<h2><strong> 回调 </strong></h2>
+
+Active Record 回调用于在模型生命周期的特定事件上绑定代码，相应的事件发生时，执行绑定的代码。例如创建新纪录时、更新记录时、删除记录时，等等。Active Record 回调会详细介绍回调。
+
+<h2><strong> 迁移 </strong></h2>
