@@ -1,5 +1,6 @@
 # How to use ActionMailbox in Rails 6
 
+link ---- https://gorails.com/episodes/action-mailbox-rails-6
 
 ```ruby
 rails new mailboxer
